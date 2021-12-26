@@ -15,6 +15,20 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+
+        <style>
+            .nav-link.active {
+                background-color: #E5E7EB !important;
+            }
+
+            .v-application--wrap {
+               min-height: unset !important;
+            }
+
+            button {
+                outline: none !important;
+            }
+        </style>
     </head>
     <body>
         <div class="tw-font-sans tw-text-gray-900 tw-antialiased">

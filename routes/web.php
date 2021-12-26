@@ -1,24 +1,32 @@
 <?php
 
+use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\YearLevelController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+    return redirect("/students");
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('schools', SchoolController::class);
+    Route::resource('academic-years', AcademicYearController::class);
+    Route::resource('semesters', SemesterController::class);
+    Route::resource('year-levels', YearLevelController::class);
+    Route::resource('courses', CourseController::class);
+    Route::resource('subjects', SubjectController::class);
+    Route::resource('students', StudentController::class);
+});
+
+require __DIR__ . '/web-api.php';
 require __DIR__.'/auth.php';
