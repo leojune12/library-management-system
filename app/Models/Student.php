@@ -64,4 +64,9 @@ class Student extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class)->withPivot('id')->wherePivotNull('deleted_at');
+    }
 }

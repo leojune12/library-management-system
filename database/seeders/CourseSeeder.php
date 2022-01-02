@@ -14,6 +14,30 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
-        Course::factory()->count(25)->create();
+        // Course::factory()->count(25)->create();
+
+        Course::create([
+            "name" => "BEED",
+        ]);
+
+        Course::create([
+            "name" => "BSA",
+        ]);
+
+        Course::create([
+            "name" => "BSBA",
+        ]);
+
+        Course::create([
+            "name" => "BSHM",
+        ]);
+
+        Course::create([
+            "name" => "BSIT",
+        ]);
+
+        Course::create([
+            "name" => "BSSW",
+        ]);
     }
 }

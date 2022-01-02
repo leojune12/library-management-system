@@ -19,6 +19,7 @@ import vuetify from './plugins/vuetify'
 import AutocompleteComponent from './components/autocomplete.vue'
 import DropdownComponent from './components/dropdown.vue'
 import TableDropdownComponent from './components/tableDropdown.vue'
+import TableMultiWhereDropdownComponent from './components/tableMultiWhereDropdown.vue'
 
 Vue.use(VueSweetalert2)
 
@@ -27,4 +28,5 @@ window.vuetify = vuetify
 window.AutocompleteComponent = AutocompleteComponent
 window.DropdownComponent = DropdownComponent
 window.TableDropdownComponent = TableDropdownComponent
+window.TableMultiWhereDropdownComponent = TableMultiWhereDropdownComponent
 

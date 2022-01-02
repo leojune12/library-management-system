@@ -7,6 +7,7 @@
             data () {
                 return {
                     url: '/students',
+                    subjects: @json($model->subjects ?? [])
                 }
             },
         })

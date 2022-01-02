@@ -51,6 +51,7 @@
                     table="courses"
                     :default-value="form.course_id"
                     :model-prop.sync="form.course_id"
+                    :error-messages="errors?.course_id?.[0]"
                 />
             </v-col>
             <v-col
@@ -62,6 +63,7 @@
                     table="year_levels"
                     :default-value="form.year_level_id"
                     :model-prop.sync="form.year_level_id"
+                    :error-messages="errors?.year_level_id?.[0]"
                 />
             </v-col>
         </v-row>

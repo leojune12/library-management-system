@@ -33,25 +33,19 @@ export default {
             type: String,
             default: ""
         },
-        primaryKey: {
-            type: String,
-            default: null
-        },
         field: {
             type: String,
             default: "",
         },
-        whereColumn: {
-            type: String,
-            default: null,
-        },
-        whereColumnId: {
-            type: Number,
-            default: null,
-        },
-        countryId: {
-            type: Number,
-            default: null,
+        whereQuery: {
+            type: Array,
+            default: function () {
+                return []
+                // {
+                //     column: '',
+                //     value: ''
+                // }
+            }
         },
         errorMessages: {
             type: null,
@@ -61,18 +55,9 @@ export default {
 
     mounted() {
 
-        if (!this.whereColumn) {
+        if (this.whereQuery.length) {
 
-            if (this.countryId) {
-
-                if (this.countryId == 169) {
-
-                    this.fetchApi()
-                }
-            } else {
-
-                this.fetchApi()
-            }
+            this.fetchApi()
         }
 
         this.model = this.modelProp
@@ -85,52 +70,14 @@ export default {
             },
             deep: true,
         },
-
-        whereColumnId: {
-            handler (val) {
-
-                this.items = []
-                this.model = null
-                this.$emit('update:model-prop', null)
-
-                if (val) {
-
-                    this.fetchApi()
-                }
-            },
-            deep: true,
-        },
-
-        countryId: {
-            handler (val) {
-
-                this.items = []
-                this.model = null
-                this.$emit('update:model-prop', null)
-
-                if (val) {
-
-                    if (this.countryId) {
-
-                        if (this.countryId == 169) {
-
-                            this.fetchApi()
-                        }
-                    }
-                }
-            },
-            deep: true,
-        },
     },
 
     methods: {
         async fetchApi() {
-            await axios.post('/api/table-dropdown-items', {
+            await axios.post('/api/table-multi-where-dropdown-items', {
                 table: this.table,
-                primaryKey: this.primaryKey,
                 field: this.field,
-                whereColumn: this.whereColumn,
-                whereColumnId: this.whereColumnId,
+                whereQuery: this.whereQuery,
             })
             .then(response => {
 

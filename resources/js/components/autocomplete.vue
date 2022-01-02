@@ -7,11 +7,11 @@
         :item-text="isFullName ? 'full_name' : field"
         item-value="id"
         :search-input.sync="search"
-        dense
         clearable
         v-on:keydown="updateItems()"
-        hint="Type one or more letter"
         :persistent-hint="!model"
+        :error-messages="errorMessages"
+        placeholder="Start typing to Search"
     ></v-autocomplete>
 </template>
 
@@ -50,6 +50,10 @@
                 default: null,
             },
             defaultValue: {
+                type: null,
+                default: null,
+            },
+            errorMessages: {
                 type: null,
                 default: null,
             }

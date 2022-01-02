@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Services\StudentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -36,16 +37,29 @@ class StudentController extends Controller
 
     public function queryHandler($query, $request)
     {
+        $query->with([
+            'course',
+            'yearLevel'
+        ]);
+
         $query->when($request->id_number != 'null', function ($query) use ($request) {
             return $query->where('id_number', 'like', '%' . $request->id_number . '%');
         });
 
-        $query->when($request->first_name != 'null', function ($query) use ($request) {
-            return $query->where('first_name', 'like', '%' . $request->first_name . '%');
+        $query->when($request->name != 'null', function ($query) use ($request) {
+            return $query->where('first_name', 'like', '%' . $request->name . '%')->orWhere('last_name', 'like', '%' . $request->name . '%');
         });
 
-        $query->when($request->last_name != 'null', function ($query) use ($request) {
-            return $query->where('last_name', 'like', '%' . $request->last_name . '%');
+        $query->when($request->gender_id != 'null', function ($query) use ($request) {
+            return $query->where('gender_id', '=', $request->gender_id);
+        });
+
+        $query->when($request->year_level_id != 'null', function ($query) use ($request) {
+            return $query->where('year_level_id', '=', $request->year_level_id);
+        });
+
+        $query->when($request->course_id != 'null', function ($query) use ($request) {
+            return $query->where('course_id', '=', $request->course_id);
         });
     }
 
@@ -60,7 +74,14 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // 'name' => 'required',
+            'id_number' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'gender_id' => 'required',
+            'academic_year_id' => 'required',
+            'semester_id' => 'required',
+            'year_level_id' => 'required',
+            'course_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -125,7 +146,14 @@ class StudentController extends Controller
         $model = Student::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            // 'name' => 'required',
+            'id_number' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'gender_id' => 'required',
+            'academic_year_id' => 'required',
+            'semester_id' => 'required',
+            'year_level_id' => 'required',
+            'course_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -144,12 +172,17 @@ class StudentController extends Controller
 
             $model->update($request->all());
 
+            if ($request->reset_subjects) {
+
+                $model->subjects()->detach();
+            }
+
             DB::commit();
 
             return response()->json([
                 'status' => 'success',
                 'title' => 'Success!',
-                'message' => 'Item successfully created.'
+                'message' => 'Item successfully updated.'
             ]);
         } catch (Throwable $e) {
 
@@ -186,6 +219,63 @@ class StudentController extends Controller
                 'status' => 'error',
                 'message' => 'Whoops! Something went wrong. Please try again.'
             ]);
+        }
+    }
+
+    public function editStudentSubject($id)
+    {
+        $model = Student::findOrFail($id);
+
+        return view('pages.student.student_subject', [
+            'title' => "Student Subject",
+            'method' => 'Update',
+            'model' => $model,
+        ]);
+    }
+
+    public function updateStudentSubject(Request $request, $id)
+    {
+        if ($request->ajax()) {
+
+            $validator = Validator::make($request->all(), [
+                'subjects.*.pivot.subject_id' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'title' => 'Whoops!',
+                    'message' => 'Please complete the form.',
+                    'errors' => $validator->errors(),
+                    'old' => $request->all(),
+                ]);
+            }
+
+            DB::beginTransaction();
+
+            try {
+
+                $model = Student::findOrFail($id);
+
+                StudentService::updateStudentSubjects($request->subjects, $request->delete_subject_ids);
+
+                DB::commit();
+
+                return response()->json([
+                    'status' => 'success',
+                    'title' => 'Success!',
+                    'message' => 'Subject/s successfully added.'
+                ]);
+            } catch (Throwable $e) {
+                dd($e);
+                DB::rollBack();
+
+                return response()->json([
+                    'status' => 'error',
+                    'title' => 'Something went wrong!',
+                    'message' => 'Please try again.'
+                ]);
+            }
         }
     }
 }

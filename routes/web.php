@@ -5,7 +5,9 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\YearLevelController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +28,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('courses', CourseController::class);
     Route::resource('subjects', SubjectController::class);
     Route::resource('students', StudentController::class);
+    Route::get('students/subjects/{id}', [StudentController::class, 'editStudentSubject']);
+    Route::put('students/subjects/{id}', [StudentController::class, 'updateStudentSubject']);
+    Route::resource('summary', SummaryController::class);
 });
 
 require __DIR__ . '/web-api.php';

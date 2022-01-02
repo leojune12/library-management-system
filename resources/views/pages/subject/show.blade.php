@@ -17,7 +17,7 @@
                 <v-list-item-content>
                     <v-list-item-subtitle>Name</v-list-item-subtitle>
                     <v-list-item-title>
-                        {{ $model->name }}
+                        {{ $model->name ?? "" }}
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -30,7 +30,7 @@
                 <v-list-item-content>
                     <v-list-item-subtitle>Description</v-list-item-subtitle>
                     <v-list-item-title>
-                        {{ $model->description }}
+                        {{ $model->description ?? "" }}
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -43,7 +43,7 @@
                 <v-list-item-content>
                     <v-list-item-subtitle>Units</v-list-item-subtitle>
                     <v-list-item-title>
-                        {{ $model->units }}
+                        {{ $model->units ?? "" }}
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -56,7 +56,7 @@
                 <v-list-item-content>
                     <v-list-item-subtitle>Course</v-list-item-subtitle>
                     <v-list-item-title>
-                        {{ $model->course->name }}
+                        {{ $model->course->name ?? "" }}
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -69,7 +69,7 @@
                 <v-list-item-content>
                     <v-list-item-subtitle>Year Level</v-list-item-subtitle>
                     <v-list-item-title>
-                        {{ $model->yearLevel->name }}
+                        {{ $model->yearLevel->name ?? "" }}
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>

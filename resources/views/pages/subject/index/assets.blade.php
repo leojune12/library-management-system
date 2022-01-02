@@ -6,6 +6,7 @@
             components: {
                 AutocompleteComponent,
                 DropdownComponent,
+                TableDropdownComponent,
             },
 
             data() {
@@ -21,8 +22,12 @@
                             value: 'name',
                         },
                         {
-                            text: 'Description',
-                            value: 'description',
+                            text: 'Year Level',
+                            value: 'year_level.name',
+                        },
+                        {
+                            text: 'Course',
+                            value: 'course.name',
                         },
                         {
                             text: 'Units',
@@ -45,7 +50,8 @@
                     filterDialog: false,
                     advanceFilters: {
                         name: null,
-                        description: null,
+                        course_id: null,
+                        year_level_id: null,
                         units: null,
                     },
                 }
@@ -80,7 +86,8 @@
                     let filters = ''
 
                     filters += '&name=' + this.advanceFilters.name
-                    filters += '&description=' + this.advanceFilters.description
+                    filters += '&course_id=' + this.advanceFilters.course_id
+                    filters += '&year_level_id=' + this.advanceFilters.year_level_id
                     filters += '&units=' + this.advanceFilters.units
 
                     return filters

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subject;
+use App\Models\StudentSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
-class SubjectController extends Controller
+class StudentSubjectController extends Controller
 {
-    public $title = 'Subject';
+    public $title = 'Student Subject';
 
     public function index(Request $request)
     {
@@ -18,14 +18,14 @@ class SubjectController extends Controller
             return $this->ajaxHandler($request);
         }
 
-        return view('pages.subject.index', [
+        return view('pages.student_subject.index', [
             'title' => $this->title,
         ]);
     }
 
     public function ajaxHandler($request)
     {
-        $query = Subject::whereNull('deleted_at');
+        $query = StudentSubject::whereNull('deleted_at');
 
         $this->queryHandler($query, $request);
 
@@ -36,32 +36,14 @@ class SubjectController extends Controller
 
     public function queryHandler($query, $request)
     {
-
-        $query->with([
-            'course',
-            'yearLevel'
-        ]);
-
-        $query->when($request->name != 'null', function ($query) use ($request) {
-            return $query->where('name', 'like', '%' . $request->name . '%');
-        });
-
-        $query->when($request->year_level_id != 'null', function ($query) use ($request) {
-            return $query->where('year_level_id', '=', $request->year_level_id);
-        });
-
-        $query->when($request->course_id != 'null', function ($query) use ($request) {
-            return $query->where('course_id', '=', $request->course_id);
-        });
-
-        $query->when($request->units != 'null', function ($query) use ($request) {
-            return $query->where('units', 'like', '%' . $request->units . '%');
-        });
+        //$query->when($request->name != 'null', function ($query) use ($request) {
+        //     return $query->where('name', 'like', '%' . $request->name . '%');
+        // });
     }
 
     public function create()
     {
-        return view('pages.subject.form', [
+        return view('pages.student_subject.form', [
             'title' => $this->title,
             'method' => 'Create',
         ]);
@@ -70,10 +52,7 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'units' => 'required',
-            'year_level_id' => 'required',
-            'course_id' => 'required',
+            // 'name' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -90,7 +69,7 @@ class SubjectController extends Controller
 
         try {
 
-            $model = Subject::create($request->all());
+            $model = StudentSubject::create($request->all());
 
             DB::commit();
 
@@ -114,9 +93,9 @@ class SubjectController extends Controller
 
     public function show($id)
     {
-        $model = Subject::findOrFail($id);
+        $model = StudentSubject::findOrFail($id);
 
-        return view('pages.subject.show', [
+        return view('pages.student_subject.show', [
             'title' => $this->title,
             'model' => $model,
         ]);
@@ -124,9 +103,9 @@ class SubjectController extends Controller
 
     public function edit($id)
     {
-        $model = Subject::findOrFail($id);
+        $model = StudentSubject::findOrFail($id);
 
-        return view('pages.subject.form', [
+        return view('pages.student_subject.form', [
             'title' => $this->title,
             'method' => 'Update',
             'model' => $model,
@@ -135,13 +114,10 @@ class SubjectController extends Controller
 
     public function update(Request $request, $id)
     {
-        $model = Subject::findOrFail($id);
+        $model = StudentSubject::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'units' => 'required',
-            'year_level_id' => 'required',
-            'course_id' => 'required',
+            // 'name' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -186,7 +162,7 @@ class SubjectController extends Controller
 
         try {
 
-            Subject::destroy($request->id_array);
+            StudentSubject::destroy($request->id_array);
 
             DB::commit();
 

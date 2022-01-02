@@ -14,9 +14,9 @@
                 md="3"
             >
                 <v-text-field
-                    v-model="form.name"
-                    label="Name"
-                    :error-messages="errors?.name?.[0]"
+                    v-model="form.id_number"
+                    label="ID No."
+                    :error-messages="errors?.id_number?.[0]"
                 />
             </v-col>
             <v-col
@@ -24,11 +24,102 @@
                 md="3"
             >
                 <v-text-field
-                    v-model="form.description"
-                    label="Description"
-                    :error-messages="errors?.description?.[0]"
+                    v-model="form.first_name"
+                    label="First Name"
+                    :error-messages="errors?.first_name?.[0]"
                 />
             </v-col>
+            <v-col
+                cols="12"
+                md="3"
+            >
+                <v-text-field
+                    v-model="form.middle_name"
+                    label="Middle Name"
+                    :error-messages="errors?.middle_name?.[0]"
+                />
+            </v-col>
+            <v-col
+                cols="12"
+                md="3"
+            >
+                <v-text-field
+                    v-model="form.last_name"
+                    label="Last Name"
+                    :error-messages="errors?.last_name?.[0]"
+                />
+            </v-col>
+            <v-col
+                cols="12"
+                md="3"
+            >
+                <dropdown-component
+                    label="Gender"
+                    :model-prop.sync="form.gender_id"
+                    array="gender"
+                    :error-messages="errors?.gender_id?.[0]"
+                />
+            </v-col>
+            <v-col
+                cols="12"
+                md="3"
+            >
+                <v-text-field
+                    v-model="form.address"
+                    label="Home Address"
+                    :error-messages="errors?.address?.[0]"
+                />
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col
+                cols="12"
+                md="3"
+            >
+                <table-dropdown-component
+                    label="Academic Year"
+                    :model-prop.sync="form.academic_year_id"
+                    table="academic_years"
+                    :error-messages="errors?.academic_year_id?.[0]"
+                />
+            </v-col>
+            <v-col
+                cols="12"
+                md="3"
+            >
+                <table-dropdown-component
+                    label="Semester"
+                    :model-prop.sync="form.semester_id"
+                    table="semesters"
+                    :error-messages="errors?.semester_id?.[0]"
+                />
+            </v-col>
+            <v-col
+                cols="12"
+                md="3"
+            >
+                <table-dropdown-component
+                    label="Year Level"
+                    :model-prop.sync="form.year_level_id"
+                    table="year_levels"
+                    :error-messages="errors?.year_level_id?.[0]"
+                />
+            </v-col>
+            <v-col
+                cols="12"
+                md="3"
+            >
+                <autocomplete-component
+                    label="Course"
+                    table="courses"
+                    :default-value="form.course_id"
+                    :model-prop.sync="form.course_id"
+                    :error-messages="errors?.course_id?.[0]"
+                />
+            </v-col>
+        </v-row>
+        @include('pages.student.form.subject-info')
+        <v-row>
             <v-col
                 cols="12"
             >

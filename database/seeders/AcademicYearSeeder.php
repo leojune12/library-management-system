@@ -14,6 +14,10 @@ class AcademicYearSeeder extends Seeder
      */
     public function run()
     {
-        AcademicYear::factory()->count(1)->create();
+        // AcademicYear::factory()->count(1)->create();
+
+        AcademicYear::create([
+            "name" => "2021-2022"
+        ]);
     }
 }

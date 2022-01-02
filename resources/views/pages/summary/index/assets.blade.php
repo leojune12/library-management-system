@@ -1,3 +1,10 @@
+@push('links')
+    <style>
+        td {
+            background-color: white !important;
+        }
+    </style>
+@endpush
 @push('scripts')
     <script type="text/javascript" defer>
         new Vue({
@@ -6,59 +13,19 @@
             components: {
                 AutocompleteComponent,
                 DropdownComponent,
-                TableDropdownComponent
+                TableDropdownComponent,
             },
 
             data() {
                 return {
-                    url: '/students',
-                    items: [],
-                    loading: true,
-                    options: {},
-                    headers: [
-                        {
-                            text: 'ID No.',
-                            align: 'start',
-                            value: 'id_number',
-                        },
-                        {
-                            text: 'Name',
-                            value: 'full_name',
-                        },
-                        {
-                            text: 'Gender',
-                            value: 'gender_type',
-                        },
-                        {
-                            text: 'Year Level',
-                            value: 'year_level.name',
-                        },
-                        {
-                            text: 'Course',
-                            value: 'course.name',
-                        },
-                        {
-                            text: 'Action',
-                            value: 'actions',
-                            sortable: false,
-                        },
-                    ],
-                    footerProps: {
-                        showFirstLastPage: true,
-                        itemsPerPageOptions: [10, 25, 50, 100]
-                    },
-                    selected: [],
-                    pagination: {
-                        data: []
-                    },
+                    url: '/summary',
+                    items: @json($courses ?? []),
+                    total:@json($total ?? []),
                     filterDialog: false,
                     advanceFilters: {
-                        id_number: null,
-                        name: null,
-                        gender_id: null,
-                        year_level_id: null,
-                        course_id: null,
-                    },
+                        academic_year_id: null,
+                        semester_id: null,
+                    }
                 }
             },
 
@@ -90,11 +57,8 @@
                 getAdvanceFilters () {
                     let filters = ''
 
-                    filters += '&id_number=' + this.advanceFilters.id_number
-                    filters += '&name=' + this.advanceFilters.name
-                    filters += '&gender_id=' + this.advanceFilters.gender_id
-                    filters += '&year_level_id=' + this.advanceFilters.year_level_id
-                    filters += '&course_id=' + this.advanceFilters.course_id
+                    filters += '&academic_year_id=' + this.advanceFilters.academic_year_id
+                    filters += '&semester_id=' + this.advanceFilters.semester_id
 
                     return filters
                 }
@@ -104,23 +68,25 @@
 
                 async fetchTableData() {
 
-                    this.loading = true
+                    // this.loading = true
 
-                    await axios.get(this.url + this.getFilters + this.getAdvanceFilters)
-                        .then(response => {
-                            this.pagination = response.data
-                            this.options.page = response.data.current_page
-                            this.options.itemsPerPage = parseInt(response.data.per_page)
-                            this.loading = false
-                        })
-                        .catch(error => {
-                            this.$swal.fire({
-                                title: 'Something went wrong',
-                                text: "Please refresh the page.",
-                                icon: 'error',
-                                confirmButtonColor: '#d33',
-                            })
-                        })
+                    // await axios.get(this.url + this.getFilters + this.getAdvanceFilters)
+                    //     .then(response => {
+                    //         this.pagination = response.data
+                    //         this.options.page = response.data.current_page
+                    //         this.options.itemsPerPage = parseInt(response.data.per_page)
+                    //         this.loading = false
+                    //     })
+                    //     .catch(error => {
+                    //         this.$swal.fire({
+                    //             title: 'Something went wrong',
+                    //             text: "Please refresh the page.",
+                    //             icon: 'error',
+                    //             confirmButtonColor: '#d33',
+                    //         })
+                    //     })
+
+                    window.location.href = "/summary?" + this.getAdvanceFilters;
                 },
 
                 confirmDelete(id) {

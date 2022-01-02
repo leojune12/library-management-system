@@ -20,12 +20,10 @@
                             <v-text-field
                                 dense
                                 clearable
-                                label="Name"
-                                v-model="advanceFilters.name"
+                                label="ID No."
+                                v-model="advanceFilters.id_number"
                             ></v-text-field>
                         </v-col>
-                    </v-row>
-                    <v-row>
                         <v-col
                             cols="12"
                             sm="6"
@@ -33,9 +31,40 @@
                             <v-text-field
                                 dense
                                 clearable
-                                label="Description"
-                                v-model="advanceFilters.description"
+                                label="Name"
+                                v-model="advanceFilters.name"
                             ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                        >
+                            <dropdown-component
+                                label="Gender"
+                                :model-prop.sync="advanceFilters.gender_id"
+                                array="gender"
+                            />
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                        >
+                            <table-dropdown-component
+                                label="Year Level"
+                                :model-prop.sync="advanceFilters.year_level_id"
+                                table="year_levels"
+                            />
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                        >
+                            <autocomplete-component
+                                label="Course"
+                                table="courses"
+                                :default-value="advanceFilters.course_id"
+                                :model-prop.sync="advanceFilters.course_id"
+                            />
                         </v-col>
                     </v-row>
                 </v-form>

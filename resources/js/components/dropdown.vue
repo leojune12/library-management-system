@@ -5,7 +5,9 @@
         :label="label"
         item-text="value"
         item-value="id"
-        dense
+        clearable
+        :error-messages="errorMessages"
+        placeholder="Start typing to Search"
     ></v-select>
 </template>
 
@@ -29,7 +31,11 @@ export default {
         },
         modelProp: {
             type: null,
-            default: 0,
+            default: null,
+        },
+        errorMessages: {
+            type: null,
+            default: null,
         }
     },
 

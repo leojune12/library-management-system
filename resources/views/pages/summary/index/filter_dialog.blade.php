@@ -17,46 +17,20 @@
                             cols="12"
                             sm="6"
                         >
-                            <v-text-field
-                                dense
-                                clearable
-                                label="Name"
-                                v-model="advanceFilters.name"
-                            ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                        >
-                            <v-text-field
-                                type="number"
-                                dense
-                                clearable
-                                label="Units"
-                                v-model="advanceFilters.units"
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                        >
                             <table-dropdown-component
-                                label="Year Level"
-                                :model-prop.sync="advanceFilters.year_level_id"
-                                table="year_levels"
+                                label="Academic Year"
+                                :model-prop.sync="advanceFilters.academic_year_id"
+                                table="academic_years"
                             />
                         </v-col>
                         <v-col
                             cols="12"
                             sm="6"
                         >
-                            <autocomplete-component
-                                label="Course"
-                                table="courses"
-                                :default-value="advanceFilters.course_id"
-                                :model-prop.sync="advanceFilters.course_id"
+                            <table-dropdown-component
+                                label="Semester"
+                                :model-prop.sync="advanceFilters.semester_id"
+                                table="semesters"
                             />
                         </v-col>
                     </v-row>

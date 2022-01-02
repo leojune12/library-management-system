@@ -25,7 +25,7 @@ class DropdownService
 
             case 'gender':
                 $result = [
-                    '0' => 'Select Gender',
+                    // '0' => 'Select Gender',
                     '1' => 'Male',
                     '2' => 'Female',
                 ];

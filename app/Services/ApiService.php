@@ -86,19 +86,19 @@ class ApiService
         }
     }
 
-    // public static function dropdownItems($array = '')
-    // {
-    //     $data = [];
+    public static function dropdownItems($array = '')
+    {
+        $data = [];
 
-    //     foreach (DropdownService::get_static($array) as $key => $value) {
-    //         array_push($data, [
-    //             'id' => $key,
-    //             'value' => $value,
-    //         ]);
-    //     }
+        foreach (DropdownService::get_static($array) as $key => $value) {
+            array_push($data, [
+                'id' => $key,
+                'value' => $value,
+            ]);
+        }
 
-    //     return $data;
-    // }
+        return $data;
+    }
 
     public static function tableDropdownItems($table = null, $primaryKey = null, $field = null, $whereColumn = null, $whereColumnId = null)
     {
@@ -120,6 +120,39 @@ class ApiService
             } else {
 
                 $query->select([$pk, 'name as value']);
+                $query->orderBy('name', 'ASC');
+            }
+
+            if (Schema::hasColumn($table, 'deleted_at')) {
+
+                $query->whereNull('deleted_at');
+            }
+
+            return $query->get();
+        }
+    }
+
+    public static function tableMultiWhereDropdownItems($table = null, $field = null, $whereQuery = null)
+    {
+        if ($table) {
+
+            $query = DB::table($table);
+
+            if ($whereQuery) {
+
+                foreach ($whereQuery as $where) {
+
+                    $query->where($where['column'], $where['value']);
+                }
+            }
+
+            if ($field) {
+
+                $query->select(['id', $field . ' as value']);
+                $query->orderBy($field, 'ASC');
+            } else {
+
+                $query->select(['id', 'name as value']);
                 $query->orderBy('name', 'ASC');
             }
 

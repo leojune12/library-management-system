@@ -43,5 +43,14 @@ Route::middleware(['auth'])->group(function () {
                 $request->whereColumnId,
             );
         });
+
+        Route::post('table-multi-where-dropdown-items',  function (Request $request) {
+
+            return ApiService::tableMultiWhereDropdownItems(
+                $request->table,
+                $request->field,
+                $request->whereQuery,
+            );
+        });
     });
 });

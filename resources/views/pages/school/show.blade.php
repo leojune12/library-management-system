@@ -17,7 +17,7 @@
                 <v-list-item-content>
                     <v-list-item-subtitle>Name</v-list-item-subtitle>
                     <v-list-item-title>
-                        {{ $model->name }}
+                        {{ $model->name ?? "" }}
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -30,7 +30,7 @@
                 <v-list-item-content>
                     <v-list-item-subtitle>Address</v-list-item-subtitle>
                     <v-list-item-title>
-                        {{ $model->address }}
+                        {{ $model->address ?? "" }}
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
