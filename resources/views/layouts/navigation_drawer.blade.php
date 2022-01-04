@@ -4,16 +4,23 @@
     color="indigo darken-2"
     dark
 >
-    <v-list-item class="tw-h-16">
-        <v-list-item-content>
-            <v-list-item-title class="text-h6">
-                Registrar
-            </v-list-item-title>
-            {{-- <v-list-item-subtitle>
-                &nbsp;
-            </v-list-item-subtitle> --}}
-        </v-list-item-content>
-    </v-list-item>
+    <div class="tw-flex tw-items-center tw-pl-4">
+        <v-img
+            src="/logo.png"
+            max-width="46"
+            max-height="56"
+        ></v-img>
+        <v-list-item class="tw-h-16">
+            <v-list-item-content>
+                <v-list-item-title class="text-h6">
+                    Registrar
+                </v-list-item-title>
+                {{-- <v-list-item-subtitle>
+                    &nbsp;
+                </v-list-item-subtitle> --}}
+            </v-list-item-content>
+        </v-list-item>
+    </div>
 
     <v-divider></v-divider>
 
