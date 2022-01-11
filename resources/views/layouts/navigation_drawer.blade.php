@@ -1,19 +1,19 @@
 <v-navigation-drawer
     app
     {{-- permanent --}}
-    color="indigo darken-2"
+    color="red darken-2"
     dark
 >
     <div class="tw-flex tw-items-center tw-pl-4">
-        <v-img
+        {{-- <v-img
             src="/logo.png"
             max-width="46"
             max-height="56"
-        ></v-img>
+        ></v-img> --}}
         <v-list-item class="tw-h-16">
             <v-list-item-content>
                 <v-list-item-title class="text-h6">
-                    Registrar
+                    Library
                 </v-list-item-title>
                 {{-- <v-list-item-subtitle>
                     &nbsp;
