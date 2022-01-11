@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Throwable;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -55,12 +56,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -106,48 +101,90 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $model = User::findOrFail($id);
+
+        return view('pages.user.form', [
+            'title' => $this->title,
+            'method' => 'Update',
+            'model' => $model,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $model = User::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($model)],
+            'is_admin' => ['nullable']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'title' => 'Whoops!',
+                'message' => 'Please complete the form.',
+                'errors' => $validator->errors(),
+                'old' => $request->all(),
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            $model->update($request->all());
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'title' => 'Success!',
+                'message' => 'Item successfully updated.'
+            ]);
+        } catch (Throwable $e) {
+
+            //return $e;
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'title' => 'Something went wrong!',
+                'message' => 'Please try again.'
+            ]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            User::destroy($request->id_array);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Item deleted successfully.'
+            ]);
+        } catch (Throwable $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Whoops! Something went wrong. Please try again.'
+            ]);
+        }
     }
 }

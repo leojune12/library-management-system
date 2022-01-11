@@ -11,7 +11,7 @@
         <v-row>
             <v-col
                 cols="12"
-                md="3"
+                md="4"
             >
                 <v-text-field
                     v-model="form.name"
@@ -23,7 +23,7 @@
         <v-row>
             <v-col
                 cols="12"
-                md="3"
+                md="4"
             >
                 <v-text-field
                     v-model="form.email"
@@ -33,10 +33,10 @@
                 />
             </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="!form.id">
             <v-col
                 cols="12"
-                md="3"
+                md="4"
             >
                 <v-text-field
                     v-model="form.password"
@@ -46,10 +46,10 @@
                 />
             </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="!form.id">
             <v-col
                 cols="12"
-                md="3"
+                md="4"
             >
                 <v-text-field
                     v-model="form.password_confirmation"
@@ -62,7 +62,7 @@
         <v-row>
             <v-col
                 cols="12"
-                md="3"
+                md="4"
             >
                 <dropdown-component
                     label="Is Admin"
