@@ -11,7 +11,7 @@
             },
             data () {
                 return {
-                    url: '/user',
+                    url: '/book',
                     errors: null,
 
                     form: {
@@ -19,15 +19,6 @@
                         ...@json($model ?? []),
                     },
                 }
-            },
-
-            watch: {
-                'form.year_level_id': function (val) {
-                    this.form.reset_subjects = true
-                },
-                'form.course_id': function (val) {
-                    this.form.reset_subjects = true
-                },
             },
 
             methods: {
@@ -65,11 +56,6 @@
                         }
                     })
                 },
-
-                async proceedSubmit() {
-
-
-                }
             },
         })
     </script>

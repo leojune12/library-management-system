@@ -3,47 +3,30 @@
 namespace App\Http\Controllers;
 
 use Throwable;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
+use App\Models\Book;
 
-class UserController extends Controller
+class BookController extends Controller
 {
-    public $title = 'User';
-
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-
-            if (!Auth::user()->is_admin) {
-
-                abort(401);
-            }
-
-            return $next($request);
-        });
-    }
+    public $title = 'Book';
 
     public function index(Request $request)
     {
-        // dd(Auth::id());
         if ($request->ajax()) {
             return $this->ajaxHandler($request);
         }
 
-        return view('pages.user.index', [
+        return view('pages.book.index', [
             'title' => $this->title,
         ]);
     }
 
     public function ajaxHandler($request)
     {
-        $query = User::whereNull('deleted_at');
+        $query = Book::whereNull('deleted_at');
 
         $this->queryHandler($query, $request);
 
@@ -54,22 +37,22 @@ class UserController extends Controller
 
     public function queryHandler($query, $request)
     {
-        $query->when($request->name != 'null', function ($query) use ($request) {
-            return $query->where('name', 'like', '%' . $request->name . '%');
+        $query->when($request->title != 'null', function ($query) use ($request) {
+            return $query->where('title', 'like', '%' . $request->title . '%');
         });
 
-        $query->when($request->email != 'null', function ($query) use ($request) {
-            return $query->where('email', 'like', '%' . $request->email . '%');
+        $query->when($request->author != 'null', function ($query) use ($request) {
+            return $query->where('author', 'like', '%' . $request->author . '%');
         });
 
-        $query->when($request->is_admin != 'null', function ($query) use ($request) {
-            return $query->where('is_admin', 'like', '%' . $request->is_admin . '%');
+        $query->when($request->description != 'null', function ($query) use ($request) {
+            return $query->where('description', 'like', '%' . $request->description . '%');
         });
     }
 
     public function create()
     {
-        return view('pages.user.form', [
+        return view('pages.book.form', [
             'title' => $this->title,
             'method' => 'Create',
         ]);
@@ -78,10 +61,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Password::defaults()],
-            'is_admin' => ['nullable']
+            'title' => 'required',
+            'author' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -98,7 +79,7 @@ class UserController extends Controller
 
         try {
 
-            $model = User::create($request->all());
+            $model = Book::create($request->all());
 
             DB::commit();
 
@@ -122,14 +103,19 @@ class UserController extends Controller
 
     public function show($id)
     {
-        //
+        $model = Book::findOrFail($id);
+
+        return view('pages.book.show', [
+            'title' => $this->title,
+            'model' => $model,
+        ]);
     }
 
     public function edit($id)
     {
-        $model = User::findOrFail($id);
+        $model = Book::findOrFail($id);
 
-        return view('pages.user.form', [
+        return view('pages.book.form', [
             'title' => $this->title,
             'method' => 'Update',
             'model' => $model,
@@ -138,12 +124,11 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $model = User::findOrFail($id);
+        $model = Book::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($model)],
-            'is_admin' => ['nullable']
+            'title' => 'required',
+            'author' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -167,11 +152,11 @@ class UserController extends Controller
             return response()->json([
                 'status' => 'success',
                 'title' => 'Success!',
-                'message' => 'Item successfully updated.'
+                'message' => 'Item successfully created.'
             ]);
         } catch (Throwable $e) {
 
-            //return $e;
+            // return $e;
             DB::rollBack();
 
             return response()->json([
@@ -188,7 +173,7 @@ class UserController extends Controller
 
         try {
 
-            User::destroy($request->id_array);
+            Book::destroy($request->id_array);
 
             DB::commit();
 

@@ -11,23 +11,23 @@
 
             data() {
                 return {
-                    url: '/user',
+                    url: '/book',
                     items: [],
                     loading: true,
                     options: {},
                     headers: [
                         {
-                            text: 'Name',
+                            text: 'Title',
                             align: 'start',
-                            value: 'name',
+                            value: 'title',
                         },
                         {
-                            text: 'Email',
-                            value: 'email',
+                            text: 'Author',
+                            value: 'author',
                         },
                         {
-                            text: 'Is Admin',
-                            value: 'is_admin',
+                            text: 'Description',
+                            value: 'description',
                         },
                         {
                             text: 'Action',
@@ -45,9 +45,9 @@
                     },
                     filterDialog: false,
                     advanceFilters: {
-                        name: null,
-                        email: null,
-                        is_admin: null,
+                        title: null,
+                        author: null,
+                        description: null,
                     },
                 }
             },
@@ -80,9 +80,9 @@
                 getAdvanceFilters () {
                     let filters = ''
 
-                    filters += '&name=' + this.advanceFilters.name
-                    filters += '&email=' + this.advanceFilters.email
-                    filters += '&is_admin=' + this.advanceFilters.is_admin
+                    filters += '&title=' + this.advanceFilters.title
+                    filters += '&author=' + this.advanceFilters.author
+                    filters += '&description=' + this.advanceFilters.description
 
                     return filters
                 }

@@ -20,8 +20,8 @@
                             <v-text-field
                                 dense
                                 clearable
-                                label="Name"
-                                v-model="advanceFilters.name"
+                                label="Title"
+                                v-model="advanceFilters.title"
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -31,19 +31,20 @@
                             <v-text-field
                                 dense
                                 clearable
-                                label="Email"
-                                v-model="advanceFilters.email"
+                                label="Author"
+                                v-model="advanceFilters.author"
                             ></v-text-field>
                         </v-col>
                         <v-col
                             cols="12"
                             sm="6"
                         >
-                            <dropdown-component
-                                label="Is Admin"
-                                :model-prop.sync="advanceFilters.is_admin"
-                                array="boolean"
-                            />
+                            <v-text-field
+                                dense
+                                clearable
+                                label="Description"
+                                v-model="advanceFilters.description"
+                            ></v-text-field>
                         </v-col>
                     </v-row>
                 </v-form>

@@ -1,7 +1,7 @@
 <v-navigation-drawer
     app
     {{-- permanent --}}
-    color="red darken-2"
+    color="green darken-2"
     dark
 >
     <div class="tw-flex tw-items-center tw-pl-4">
@@ -40,28 +40,28 @@
             </v-list-item-content>
         </v-list-item> --}}
         <v-list-item
-            href="/summary"
+            href="/book"
         >
             <v-list-item-icon>
-                <v-icon>mdi-view-dashboard</v-icon>
+                <v-icon>mdi-bookshelf</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-                <v-list-item-title>Summary</v-list-item-title>
+                <v-list-item-title>Books</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
         <v-list-item
-            href="/students"
+            href="/user"
         >
             <v-list-item-icon>
                 <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-                <v-list-item-title>Students</v-list-item-title>
+                <v-list-item-title>Users</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
-        <v-list-group
+        {{-- <v-list-group
             prepend-icon="mdi-cog"
             no-action
         >
@@ -131,6 +131,6 @@
                     <v-list-item-title>Subjects</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-        </v-list-group>
+        </v-list-group> --}}
     </v-list>
 </v-navigation-drawer>

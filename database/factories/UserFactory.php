@@ -16,11 +16,12 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => "Administrator",
-            'email' => "admin@test.com",
+            'name' => $this->faker->name(),
+            'email' => $this->faker->email(),
             'email_verified_at' => now(),
             'password' => Hash::make("pw@12345"),
             'remember_token' => Str::random(10),
+            'is_admin' => rand(0, 1),
         ];
     }
 

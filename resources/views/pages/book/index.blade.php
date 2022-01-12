@@ -64,7 +64,7 @@
                     Filter
                 </v-btn>
 
-                @include('pages.user.index.filter_dialog')
+                @include('pages.book.index.filter_dialog')
 
             </v-toolbar>
         </template>
@@ -73,14 +73,14 @@
 
             <div class="tw-flex">
 
-                {{-- <v-btn
+                <v-btn
                     icon
                     color="success"
                     :href="url + '/' + item.id"
                     title="View"
                 >
                     <v-icon>mdi-eye</v-icon>
-                </v-btn> --}}
+                </v-btn>
                 <v-menu
                     offset-y
                     left
@@ -137,5 +137,5 @@
         </template>
     </v-data-table>
 
-    @include('pages.user.index.assets')
+    @include('pages.book.index.assets')
 </x-app-layout>

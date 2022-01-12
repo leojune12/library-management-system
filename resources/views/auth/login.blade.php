@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="tw-w-20 tw-h-20 tw-fill-current tw-text-gray-500" />
+                <x-application-logo class="tw-w-16 tw-h-16 tw-fill-current tw-text-gray-500" />
             </a>
         </x-slot>
 
@@ -40,16 +40,23 @@
                 </label>
             </div>
 
-            <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
-                @if (Route::has('password.request'))
+            <div class="tw-mt-4">
+
+                {{-- <x-button class="tw-w-full tw-text-center">
+                    {{ __('Log in') }}
+                </x-button> --}}
+
+                <button class="tw-py-3 tw-text-center tw-w-full tw-bg-green-600 tw-rounded-lg tw-text-white">
+                    {{ __('Log in') }}
+                </button>
+
+                <div>
+                    @if (Route::has('password.request'))
                     <a class="tw-underline tw-text-sm tw-text-gray-600 hover:tw-text-gray-900" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
-
-                <x-button class="tw-ml-3">
-                    {{ __('Log in') }}
-                </x-button>
+                </div>
             </div>
         </form>
     </x-auth-card>
