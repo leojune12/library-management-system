@@ -24,6 +24,7 @@
             <v-toolbar
                 flat
             >
+                @if (Auth::user()->is_admin)
                 <v-btn
                     tile
                     color="success"
@@ -35,6 +36,7 @@
                     </v-icon>
                     Create
                 </v-btn>
+                @endif
 
                 <v-spacer></v-spacer>
 
@@ -81,6 +83,7 @@
                 >
                     <v-icon>mdi-eye</v-icon>
                 </v-btn>
+                @if (Auth::user()->is_admin)
                 <v-menu
                     offset-y
                     left
@@ -133,6 +136,7 @@
                         </v-list-item>
                     </v-list>
                 </v-menu>
+                @endif
             </div>
         </template>
     </v-data-table>

@@ -53,13 +53,15 @@
         <v-col
             cols="12"
         >
-            <v-btn
-                class="tw-ml-4"
-                color="success"
-                :href="url + '/{{ $model->id }}/edit'"
-            >
-                Update
-            </v-btn>
+            @if (Auth::user()->is_admin)
+                <v-btn
+                    class="tw-ml-4"
+                    color="success"
+                    :href="url + '/{{ $model->id }}/edit'"
+                >
+                    Update
+                </v-btn>
+            @endif
             <v-btn
                 class="tw-ml-4"
                 :href="url"

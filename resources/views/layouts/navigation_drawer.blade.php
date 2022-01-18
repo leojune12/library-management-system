@@ -50,6 +50,7 @@
                 <v-list-item-title>Books</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
+        @if (Auth::user()->is_admin)
         <v-list-item
             href="/user"
         >
@@ -61,6 +62,7 @@
                 <v-list-item-title>Users</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
+        @endif
         {{-- <v-list-group
             prepend-icon="mdi-cog"
             no-action
